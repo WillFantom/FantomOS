@@ -1,0 +1,618 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+kbBuffer            0x4               ./build/Process.o
+modCount            0x1               ./build/TarParser.o
+mem_info_h          0x14              ./build/PhysMem_Hybrid.o
+keyboard_info       0x8               ./build/Process.o
+errno               0x4               ./build/HeapMem_SBRK.o
+blockedProcesses    0x4               ./build/Process.o
+mb                  0x4               ./build/TarParser.o
+phys_map            0x4               ./build/PhysMem_Bitmap.o
+process_list        0x4               ./build/Process.o
+malloc              0x4               ./build/RamDisk.o
+gdt                 0x30              ./build/Process.o
+Scheduler_running   0x4               ./build/Process.o
+kheap_top           0x4               ./build/RamDisk.o
+KMod_init           0x180             ./build/TarParser.o
+PhysMem_allocate    0x4               ./build/RamDisk.o
+blockedCount        0x1               ./build/Process.o
+idt_p               0x6               ./build/IDT.o
+kprocess            0x4               ./build/Process.o
+calloc              0x4               ./build/RamDisk.o
+Interrupts_addIRQ   0x4               ./build/Scheduler_RR.o
+handlers            0x400             ./build/Scheduler_RR.o
+currentProcess      0x4               ./build/Process.o
+mb_mods             0x14              ./build/TarParser.o
+PhysMem_free        0x4               ./build/RamDisk.o
+Interrupts_addISR   0x4               ./build/Scheduler_RR.o
+kernel_end          0x4               ./build/TarParser.o
+phys_stack          0x4               ./build/PhysMem_Hybrid.o
+tick                0x4               ./build/Process.o
+kdir                0x4               ./build/Process.o
+tss_e               0x68              ./build/Process.o
+phys_bitmap         0x4               ./build/PhysMem_Hybrid.o
+sysInfo             0x5c              ./build/TarParser.o
+curr_PID            0x4               ./build/Process.o
+idt                 0x800             ./build/IDT.o
+FS_mounts           0x4               ./build/RamDisk.o
+mem_info            0x14              ./build/PhysMem_Bitmap.o
+PageSizeExtension_enabled
+                    0x4               ./build/Process.o
+currentTime         0x3               ./build/RTC.o
+gdt_p               0x6               ./build/Process.o
+free                0x4               ./build/RamDisk.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x00000000c0100000                . = 0xc0100000
+                0x00000000c0100000                k_mem_start = .
+
+.text           0x00000000c0100000     0xa3a4 load address 0x0000000000100000
+                0x00000000c0100000                text = .
+ *(.text)
+ .text          0x00000000c0100000       0x6f ./build/loader.o
+                0x00000000c0100000                mbh
+                0x00000000c0100020                load
+ *fill*         0x00000000c010006f        0x1 
+ .text          0x00000000c0100070       0x17 ./build/aCommon.o
+                0x00000000c0100070                halt_cpu
+                0x00000000c0100071                interrupts_enb
+                0x00000000c0100073                interrupts_dis
+                0x00000000c0100075                outb
+                0x00000000c0100080                inb
+ *fill*         0x00000000c0100087        0x9 
+ .text          0x00000000c0100090       0x21 ./build/aUser.o
+                0x00000000c0100090                User_switch
+ *fill*         0x00000000c01000b1        0xf 
+ .text          0x00000000c01000c0       0x25 ./build/aGDT.o
+                0x00000000c01000c0                GDT_flush
+                0x00000000c01000dd                TSS_flush
+ *fill*         0x00000000c01000e5        0xb 
+ .text          0x00000000c01000f0        0xc ./build/aVirtMem_Paging.o
+                0x00000000c01000f0                VirtMem_pagefaultAddr
+                0x00000000c01000f4                VirtMem_changeDir
+ *fill*         0x00000000c01000fc        0x4 
+ .text          0x00000000c0100100      0x1f1 ./build/aIDT.o
+                0x00000000c0100100                idt_setup
+                0x00000000c0100108                irq0
+                0x00000000c0100112                irq1
+                0x00000000c010011c                irq2
+                0x00000000c0100126                irq3
+                0x00000000c0100130                irq4
+                0x00000000c010013a                irq5
+                0x00000000c0100144                irq6
+                0x00000000c010014e                irq7
+                0x00000000c0100158                irq8
+                0x00000000c0100162                irq9
+                0x00000000c010016c                irq10
+                0x00000000c0100176                irq11
+                0x00000000c0100180                irq12
+                0x00000000c010018a                irq13
+                0x00000000c0100194                irq14
+                0x00000000c010019e                irq15
+                0x00000000c01001a8                isr8
+                0x00000000c01001b0                isr10
+                0x00000000c01001b8                isr11
+                0x00000000c01001c0                isr12
+                0x00000000c01001c8                isr13
+                0x00000000c01001d0                isr14
+                0x00000000c01001d8                isr17
+                0x00000000c01001e0                isr0
+                0x00000000c01001ea                isr1
+                0x00000000c01001f4                isr2
+                0x00000000c01001fe                isr3
+                0x00000000c0100208                isr4
+                0x00000000c0100212                isr5
+                0x00000000c010021c                isr6
+                0x00000000c0100226                isr7
+                0x00000000c0100230                isr9
+                0x00000000c0100237                isr15
+                0x00000000c010023e                isr16
+                0x00000000c0100245                isr18
+                0x00000000c010024c                isr19
+                0x00000000c0100253                isr20
+                0x00000000c010025a                isr21
+                0x00000000c0100261                isr22
+                0x00000000c0100268                isr23
+                0x00000000c010026f                isr24
+                0x00000000c0100276                isr25
+                0x00000000c010027d                isr26
+                0x00000000c0100284                isr27
+                0x00000000c010028b                isr28
+                0x00000000c0100292                isr29
+                0x00000000c0100299                isr30
+                0x00000000c01002a0                isr31
+                0x00000000c01002a7                isr128
+ .text          0x00000000c01002f1      0x1e7 ./build/TarParser.o
+                0x00000000c01002f1                Tar_getInt
+                0x00000000c010038a                Tar_validHeader
+                0x00000000c01003fd                Tar_nextHeader
+                0x00000000c010044e                Tar_countHeaders
+                0x00000000c0100487                Tar_getHeaderAtIndex
+ .text          0x00000000c01004d8      0x321 ./build/RamDisk.o
+                0x00000000c01004d8                RamDisk_getDepth
+                0x00000000c0100525                RamDisk_onlyFileName
+                0x00000000c010055b                RamDisk_filenameCmp
+                0x00000000c010059a                RamDisk_scanTar
+                0x00000000c010066c                RamDisk_readFile
+                0x00000000c01006c9                RamDisk_init
+ .text          0x00000000c01007f9      0x268 ./build/LinkedList.o
+                0x00000000c01007f9                LinkedList_create
+                0x00000000c0100835                LinkedList_destroy
+                0x00000000c010088f                LinkedList_addNode
+                0x00000000c010090a                LinkedList_removeNode
+                0x00000000c01009d7                LinkedList_getNodeByIndex
+                0x00000000c0100a2b                LinkedList_getNodeByData
+ .text          0x00000000c0100a61      0x682 ./build/Process.o
+                0x00000000c0100a61                Process_createKernelProcess
+                0x00000000c0100bcf                Process_getKProcess
+                0x00000000c0100bd9                Process_setTSS
+                0x00000000c0100c66                Process_createUserProcess
+                0x00000000c0100f1f                Process_blockProcess
+                0x00000000c0100f36                Process_createChild
+                0x00000000c0100f5b                Process_kill
+                0x00000000c0100fab                Process_makeForeground
+                0x00000000c0100fdf                Process_fSwitch
+                0x00000000c0100fef                Process_contextSwitch
+                0x00000000c01010cb                Process_init
+ .text          0x00000000c01010e3      0x1e1 ./build/Scheduler_RR.o
+                0x00000000c01010e3                Scheduler_RR_init
+                0x00000000c010112c                PIT_handler
+                0x00000000c010118d                Scheduler_getCurrent
+                0x00000000c01011a7                Scheduler_addProcess
+                0x00000000c010120f                Scheduler_removeProcess
+                0x00000000c0101260                Scheduler_nextProcess
+ .text          0x00000000c01012c4       0x69 ./build/Syscall.o
+                0x00000000c01012c4                Syscall_handle
+ .text          0x00000000c010132d       0xfb ./build/User.o
+                0x00000000c010132d                User_switchTo
+ .text          0x00000000c0101428      0x436 ./build/PhysMem_Hybrid.o
+                0x00000000c0101428                PhysMem_Hybrid_free
+                0x00000000c010146f                PhysMem_Hybrid_allocate
+                0x00000000c01014fc                PhysMem_Hybrid_init
+                0x00000000c01017cb                printMemInfoHybrid
+ .text          0x00000000c010185e      0x319 ./build/GDT.o
+                0x00000000c010185e                GDT_set
+                0x00000000c0101940                TSS_init
+                0x00000000c0101a6e                GDT_init
+ .text          0x00000000c0101b77      0x2e3 ./build/VGA.o
+                0x00000000c0101b77                VGA_init
+                0x00000000c0101b94                VGA_update
+                0x00000000c0101c0e                VGA_cls
+                0x00000000c0101c90                VGA_scroll
+                0x00000000c0101d1e                VGA_putChar
+                0x00000000c0101e10                VGA_putStr
+                0x00000000c0101e40                VGA_colourError
+                0x00000000c0101e4d                VGA_standardColour
+ .text          0x00000000c0101e5a      0x209 ./build/Keyboard.o
+                0x00000000c0101e5a                Keyboard_init
+                0x00000000c0101e85                Keyboard_getNewBuffer
+                0x00000000c0101ef6                Keyboard_bufferRead
+                0x00000000c0101f67                Keyboard_bufferWrite
+                0x00000000c0101fc6                kb_handler
+                0x00000000c0102030                Keyboard_getInput
+ .text          0x00000000c0102063      0x162 ./build/RTC.o
+                0x00000000c0102063                RTC_init
+                0x00000000c010206d                RTC_updateInProgress
+                0x00000000c0102099                RTC_getValue
+                0x00000000c01020c9                RTC_bcdConvert
+                0x00000000c01020f7                RTC_bcdMode
+                0x00000000c0102121                RTC_printTime
+ .text          0x00000000c01021c5      0x3a1 ./build/VFS.o
+                0x00000000c01021c5                VFS_init
+                0x00000000c01021dc                VFS_nextMountId
+                0x00000000c0102240                VFS_mount
+                0x00000000c01022c6                VFS_unmount
+                0x00000000c010233e                VFS_nameCmp
+                0x00000000c010237d                VFS_findNode
+                0x00000000c01023e8                VFS_open
+                0x00000000c0102441                VFS_fileInfo
+                0x00000000c0102460                VFS_getFileSize
+                0x00000000c01024be                VFS_getFileAtIndex
+                0x00000000c0102540                VFS_read
+ .text          0x00000000c0102566      0x38a ./build/PhysMem_Bitmap.o
+                0x00000000c0102566                PhysMem_Bitmap_free
+                0x00000000c010258c                PhysMem_Bitmap_allocate
+                0x00000000c01025fa                PhysMem_Bitmap_init
+                0x00000000c01027fc                printMemInfo
+ .text          0x00000000c01028f0      0x8b8 ./build/VirtMem_Paging.o
+                0x00000000c01028f0                VirtMem_handlePageFault
+                0x00000000c010292d                VirtMem_disablePSE
+                0x00000000c0102963                VirtMem_invalidateTLBE
+                0x00000000c010296f                VirtMem_mapToCurrent
+                0x00000000c0102a0d                VirtMem_initPDE
+                0x00000000c0102acb                VirtMem_initPTE
+                0x00000000c0102b89                VirtMem_virt2Phys
+                0x00000000c0102c54                VirtMem_createDir
+                0x00000000c0102d32                VirtMem_freeDir
+                0x00000000c0102d38                VirtMem_mapPage
+                0x00000000c0102e50                VirtMem_unmapPage
+                0x00000000c0102f4d                VirtMem_cpyDir
+                0x00000000c0103106                VirtMem_getKDIR
+                0x00000000c0103110                VirtMem_Paging_init
+ .text          0x00000000c01031a8       0x40 ./build/Faults.o
+                0x00000000c01031a8                Faults_handle
+ .text          0x00000000c01031e8      0x73d ./build/IDT.o
+                0x00000000c01031e8                IDT_set
+                0x00000000c0103273                IDT_installISR
+                0x00000000c01035f9                IDT_installIRQ
+                0x00000000c01037de                IDT_init
+                0x00000000c010384d                IDT_handle
+                0x00000000c01038be                IDT_addISR
+                0x00000000c01038db                IDT_addIRQ
+ .text          0x00000000c0103925      0x28d ./build/HeapMem_SBRK.o
+                0x00000000c0103925                HeapMem_SBRK_init
+                0x00000000c0103961                HeapMem_KSBRK
+                0x00000000c0103abe                HeapMem_SBRK
+ .text          0x00000000c0103bb2     0x5a85 ./build/malloc.o
+                0x00000000c0107082                dlmalloc
+                0x00000000c010757f                dlfree
+                0x00000000c0108309                dlcalloc
+                0x00000000c01091b6                dlrealloc
+                0x00000000c01092b5                dlrealloc_in_place
+                0x00000000c010932c                dlmemalign
+                0x00000000c0109360                dlposix_memalign
+                0x00000000c0109407                dlvalloc
+                0x00000000c0109439                dlpvalloc
+                0x00000000c010947b                dlindependent_calloc
+                0x00000000c01094a5                dlindependent_comalloc
+                0x00000000c01094c8                dlbulk_free
+                0x00000000c01094e6                dlmalloc_trim
+                0x00000000c010951f                dlmalloc_footprint
+                0x00000000c0109529                dlmalloc_max_footprint
+                0x00000000c0109533                dlmalloc_footprint_limit
+                0x00000000c0109553                dlmalloc_set_footprint_limit
+                0x00000000c01095a9                dlmallinfo
+                0x00000000c01095ca                dlmallopt
+                0x00000000c01095e3                dlmalloc_usable_size
+ .text          0x00000000c0109637      0x4ad ./build/Kernel.o
+                0x00000000c0109637                Kernel_halt
+                0x00000000c0109644                Kernel_initModule
+                0x00000000c0109664                Kernel_panic
+                0x00000000c010969b                Kernel_validMagic
+                0x00000000c01096b5                Kernel_getMBMods
+                0x00000000c01096f7                Kernel_addKenrelMods
+                0x00000000c01098e4                Kernel_initMods
+                0x00000000c010992f                printSystemInfo
+                0x00000000c0109a6e                kmain
+ .text          0x00000000c0109ae4       0x74 ./build/Stack.o
+                0x00000000c0109ae4                Stack_push
+                0x00000000c0109b21                Stack_pop
+ .text          0x00000000c0109b58      0x104 ./build/Bitmap.o
+                0x00000000c0109b58                Bitmap_checkBit
+                0x00000000c0109b91                Bitmap_setBit
+                0x00000000c0109bd1                Bitmap_clearBit
+                0x00000000c0109c13                Bitmap_clearAll
+                0x00000000c0109c36                Bitmap_setAll
+ .text          0x00000000c0109c5c       0x71 ./build/Common.o
+                0x00000000c0109c5c                memcpy
+                0x00000000c0109c97                memset
+                0x00000000c0109cc7                empty
+ .text          0x00000000c0109ccd      0x2ab ./build/Debug.o
+                0x00000000c0109ccd                Debug_putChar
+                0x00000000c0109d12                Debug_putStr
+                0x00000000c0109d4d                iota
+                0x00000000c0109e63                kprintf
+ .text          0x00000000c0109f78       0x50 ./build/PIT.o
+                0x00000000c0109f78                PIT_init
+ .text          0x00000000c0109fc8      0x113 ./build/PS2.o
+                0x00000000c0109fc8                PS2_init
+                0x00000000c0109fd2                PS2_enableInt
+                0x00000000c010a01f                PS2_inPoll
+                0x00000000c010a052                PS2_outPoll
+                0x00000000c010a085                PS2_send
+                0x00000000c010a0b7                PS2_rec
+ .text          0x00000000c010a0db       0xe8 ./build/PIC.o
+                0x00000000c010a0db                PIC_init
+                0x00000000c010a18d                PIC_eoi
+ .text          0x00000000c010a1c3      0x1e1 ./build/Serial.o
+                0x00000000c010a1c3                Serial_init
+                0x00000000c010a2d0                Serial_transmitFree
+                0x00000000c010a301                Serial_putChar
+                0x00000000c010a369                Serial_putStr
+
+.iplt           0x00000000c010a3a8        0x0 load address 0x000000000010a3a8
+ .iplt          0x00000000c010a3a8        0x0 ./build/loader.o
+
+.rodata         0x00000000c010b000      0x814 load address 0x000000000010b000
+ *(.rodata*)
+ .rodata        0x00000000c010b000       0x1b ./build/TarParser.o
+ *fill*         0x00000000c010b01b        0x1 
+ .rodata        0x00000000c010b01c       0x2b ./build/RamDisk.o
+ .rodata        0x00000000c010b047       0x1b ./build/Process.o
+ .rodata        0x00000000c010b062       0x2e ./build/Scheduler_RR.o
+ .rodata        0x00000000c010b090       0x87 ./build/User.o
+ *fill*         0x00000000c010b117        0x1 
+ .rodata        0x00000000c010b118       0xd9 ./build/PhysMem_Hybrid.o
+ .rodata        0x00000000c010b1f1       0x10 ./build/RTC.o
+ *fill*         0x00000000c010b201        0x3 
+ .rodata        0x00000000c010b204       0xed ./build/PhysMem_Bitmap.o
+ *fill*         0x00000000c010b2f1        0x3 
+ .rodata        0x00000000c010b2f4       0x68 ./build/VirtMem_Paging.o
+ .rodata        0x00000000c010b35c      0x1af ./build/Faults.o
+ .rodata        0x00000000c010b50b       0x1b ./build/IDT.o
+ *fill*         0x00000000c010b526        0x2 
+ .rodata        0x00000000c010b528       0x57 ./build/HeapMem_SBRK.o
+ *fill*         0x00000000c010b57f        0x1 
+ .rodata        0x00000000c010b580      0x18d ./build/Kernel.o
+ *fill*         0x00000000c010b70d        0x3 
+ .rodata        0x00000000c010b710       0xe9 ./build/Debug.o
+ .rodata        0x00000000c010b7f9       0x1b ./build/Serial.o
+
+.eh_frame       0x00000000c010b814     0x1730 load address 0x000000000010b814
+ .eh_frame      0x00000000c010b814       0xb8 ./build/TarParser.o
+ .eh_frame      0x00000000c010b8cc       0xc0 ./build/RamDisk.o
+                                         0xd8 (size before relaxing)
+ .eh_frame      0x00000000c010b98c       0xc0 ./build/LinkedList.o
+                                         0xd8 (size before relaxing)
+ .eh_frame      0x00000000c010ba4c      0x168 ./build/Process.o
+                                        0x180 (size before relaxing)
+ .eh_frame      0x00000000c010bbb4       0xc0 ./build/Scheduler_RR.o
+                                         0xd8 (size before relaxing)
+ .eh_frame      0x00000000c010bc74       0x2c ./build/Syscall.o
+                                         0x44 (size before relaxing)
+ .eh_frame      0x00000000c010bca0       0x20 ./build/User.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x00000000c010bcc0       0x84 ./build/PhysMem_Hybrid.o
+                                         0x9c (size before relaxing)
+ .eh_frame      0x00000000c010bd44       0x68 ./build/GDT.o
+                                         0x80 (size before relaxing)
+ .eh_frame      0x00000000c010bdac      0x100 ./build/VGA.o
+                                        0x118 (size before relaxing)
+ .eh_frame      0x00000000c010beac       0xc0 ./build/Keyboard.o
+                                         0xd8 (size before relaxing)
+ .eh_frame      0x00000000c010bf6c       0xc0 ./build/RTC.o
+                                         0xd8 (size before relaxing)
+ .eh_frame      0x00000000c010c02c      0x164 ./build/VFS.o
+                                        0x17c (size before relaxing)
+ .eh_frame      0x00000000c010c190       0x84 ./build/PhysMem_Bitmap.o
+                                         0x9c (size before relaxing)
+ .eh_frame      0x00000000c010c214      0x1d4 ./build/VirtMem_Paging.o
+                                        0x1ec (size before relaxing)
+ .eh_frame      0x00000000c010c3e8       0x20 ./build/Faults.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x00000000c010c408       0xe8 ./build/IDT.o
+                                        0x100 (size before relaxing)
+ .eh_frame      0x00000000c010c4f0       0x64 ./build/HeapMem_SBRK.o
+                                         0x7c (size before relaxing)
+ .eh_frame      0x00000000c010c554      0x560 ./build/malloc.o
+                                        0x578 (size before relaxing)
+ .eh_frame      0x00000000c010cab4      0x11c ./build/Kernel.o
+                                        0x134 (size before relaxing)
+ .eh_frame      0x00000000c010cbd0       0x40 ./build/Stack.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x00000000c010cc10       0xac ./build/Bitmap.o
+                                         0xc4 (size before relaxing)
+ .eh_frame      0x00000000c010ccbc       0x60 ./build/Common.o
+                                         0x78 (size before relaxing)
+ .eh_frame      0x00000000c010cd1c       0x88 ./build/Debug.o
+                                         0xa0 (size before relaxing)
+ .eh_frame      0x00000000c010cda4       0x20 ./build/PIT.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x00000000c010cdc4       0xc0 ./build/PS2.o
+                                         0xd8 (size before relaxing)
+ .eh_frame      0x00000000c010ce84       0x40 ./build/PIC.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x00000000c010cec4       0x80 ./build/Serial.o
+                                         0x98 (size before relaxing)
+
+.rel.dyn        0x00000000c010cf44        0x0 load address 0x000000000010cf44
+ .rel.got       0x00000000c010cf44        0x0 ./build/loader.o
+ .rel.iplt      0x00000000c010cf44        0x0 ./build/loader.o
+ .rel.text      0x00000000c010cf44        0x0 ./build/loader.o
+
+.data           0x00000000c010d000     0x18f4 load address 0x000000000010d000
+ *(.data)
+ .data          0x00000000c010d000     0x1000 ./build/loader.o
+                0x00000000c010d000                Initial_Page_Dir
+ .data          0x00000000c010e000        0x0 ./build/aIDT.o
+ .data          0x00000000c010e000        0x0 ./build/TarParser.o
+ .data          0x00000000c010e000        0x0 ./build/RamDisk.o
+ .data          0x00000000c010e000        0x0 ./build/LinkedList.o
+ .data          0x00000000c010e000      0x100 ./build/Process.o
+ .data          0x00000000c010e100      0x100 ./build/Scheduler_RR.o
+ .data          0x00000000c010e200      0x140 ./build/Syscall.o
+                0x00000000c010e300                Syscall_map
+ .data          0x00000000c010e340      0x100 ./build/User.o
+ .data          0x00000000c010e440        0x0 ./build/PhysMem_Hybrid.o
+ .data          0x00000000c010e440      0x100 ./build/GDT.o
+ .data          0x00000000c010e540        0x4 ./build/VGA.o
+                0x00000000c010e540                VGA_FRAMEBUFFER
+ *fill*         0x00000000c010e544       0x1c 
+ .data          0x00000000c010e560      0x100 ./build/Keyboard.o
+ .data          0x00000000c010e660        0x0 ./build/RTC.o
+ .data          0x00000000c010e660        0x0 ./build/VFS.o
+ .data          0x00000000c010e660        0x0 ./build/PhysMem_Bitmap.o
+ .data          0x00000000c010e660        0x0 ./build/VirtMem_Paging.o
+ .data          0x00000000c010e660       0x80 ./build/Faults.o
+ .data          0x00000000c010e6e0        0x0 ./build/IDT.o
+ .data          0x00000000c010e6e0      0x100 ./build/HeapMem_SBRK.o
+ .data          0x00000000c010e7e0        0x0 ./build/malloc.o
+ .data          0x00000000c010e7e0      0x100 ./build/Kernel.o
+ .data          0x00000000c010e8e0        0x0 ./build/Stack.o
+ .data          0x00000000c010e8e0        0x0 ./build/Bitmap.o
+ .data          0x00000000c010e8e0        0x0 ./build/Common.o
+ .data          0x00000000c010e8e0        0x4 ./build/Debug.o
+ .data          0x00000000c010e8e4        0x0 ./build/PIT.o
+ .data          0x00000000c010e8e4        0x0 ./build/PS2.o
+ .data          0x00000000c010e8e4        0x0 ./build/PIC.o
+ .data          0x00000000c010e8e4       0x10 ./build/Serial.o
+                0x00000000c010e8e4                com
+
+.got            0x00000000c010e8f4        0x0 load address 0x000000000010e8f4
+ .got           0x00000000c010e8f4        0x0 ./build/loader.o
+
+.got.plt        0x00000000c010e8f4        0x0 load address 0x000000000010e8f4
+ .got.plt       0x00000000c010e8f4        0x0 ./build/loader.o
+
+.igot.plt       0x00000000c010e8f4        0x0 load address 0x000000000010e8f4
+ .igot.plt      0x00000000c010e8f4        0x0 ./build/loader.o
+
+.bss            0x00000000c010f000     0x5204 load address 0x000000000010f000
+                0x00000000c010f000                bssstart = .
+ *(.COMMON)
+ *(.bss)
+ .bss           0x00000000c010f000     0x4000 ./build/loader.o
+ .bss           0x00000000c0113000        0x0 ./build/aIDT.o
+ .bss           0x00000000c0113000        0x0 ./build/TarParser.o
+ .bss           0x00000000c0113000        0x0 ./build/RamDisk.o
+ .bss           0x00000000c0113000        0x0 ./build/LinkedList.o
+ .bss           0x00000000c0113000        0x0 ./build/Process.o
+ .bss           0x00000000c0113000        0x0 ./build/Scheduler_RR.o
+ .bss           0x00000000c0113000        0x9 ./build/Syscall.o
+ .bss           0x00000000c0113009        0x0 ./build/User.o
+ .bss           0x00000000c0113009        0x0 ./build/PhysMem_Hybrid.o
+ .bss           0x00000000c0113009        0x0 ./build/GDT.o
+ *fill*         0x00000000c0113009        0x3 
+ .bss           0x00000000c011300c        0x9 ./build/VGA.o
+ *fill*         0x00000000c0113015        0x3 
+ .bss           0x00000000c0113018        0x4 ./build/Keyboard.o
+                0x00000000c0113018                blocking
+ .bss           0x00000000c011301c        0x0 ./build/RTC.o
+ .bss           0x00000000c011301c        0x0 ./build/VFS.o
+ .bss           0x00000000c011301c        0x0 ./build/PhysMem_Bitmap.o
+ .bss           0x00000000c011301c        0x0 ./build/VirtMem_Paging.o
+ .bss           0x00000000c011301c        0x0 ./build/Faults.o
+ .bss           0x00000000c011301c        0x0 ./build/IDT.o
+ .bss           0x00000000c011301c        0x0 ./build/HeapMem_SBRK.o
+ *fill*         0x00000000c011301c        0x4 
+ .bss           0x00000000c0113020      0x1f8 ./build/malloc.o
+ .bss           0x00000000c0113218        0x9 ./build/Kernel.o
+ .bss           0x00000000c0113221        0x0 ./build/Stack.o
+ .bss           0x00000000c0113221        0x0 ./build/Bitmap.o
+ .bss           0x00000000c0113221        0x0 ./build/Common.o
+ *fill*         0x00000000c0113221        0x3 
+ .bss           0x00000000c0113224        0x9 ./build/Debug.o
+ .bss           0x00000000c011322d        0x0 ./build/PIT.o
+ .bss           0x00000000c011322d        0x0 ./build/PS2.o
+ .bss           0x00000000c011322d        0x0 ./build/PIC.o
+ .bss           0x00000000c011322d        0x0 ./build/Serial.o
+                0x00000000c011322d                bssend = .
+ *fill*         0x00000000c011322d       0x13 
+ COMMON         0x00000000c0113240      0x21c ./build/TarParser.o
+                0x00000000c0113240                modCount
+                0x00000000c0113244                mb
+                0x00000000c0113260                KMod_init
+                0x00000000c01133e0                mb_mods
+                0x00000000c01133f4                kernel_end
+                0x00000000c0113400                sysInfo
+ COMMON         0x00000000c011345c       0x1c ./build/RamDisk.o
+                0x00000000c011345c                malloc
+                0x00000000c0113460                kheap_top
+                0x00000000c0113464                PhysMem_allocate
+                0x00000000c0113468                calloc
+                0x00000000c011346c                PhysMem_free
+                0x00000000c0113470                FS_mounts
+                0x00000000c0113474                free
+ *fill*         0x00000000c0113478        0x8 
+ COMMON         0x00000000c0113480       0xf6 ./build/Process.o
+                0x00000000c0113480                kbBuffer
+                0x00000000c0113484                keyboard_info
+                0x00000000c011348c                blockedProcesses
+                0x00000000c0113490                process_list
+                0x00000000c01134a0                gdt
+                0x00000000c01134d0                Scheduler_running
+                0x00000000c01134d4                blockedCount
+                0x00000000c01134d8                kprocess
+                0x00000000c01134dc                currentProcess
+                0x00000000c01134e0                tick
+                0x00000000c01134e4                kdir
+                0x00000000c0113500                tss_e
+                0x00000000c0113568                curr_PID
+                0x00000000c011356c                PageSizeExtension_enabled
+                0x00000000c0113570                gdt_p
+ *fill*         0x00000000c0113576        0xa 
+ COMMON         0x00000000c0113580      0x424 ./build/Scheduler_RR.o
+                0x00000000c0113580                Interrupts_addIRQ
+                0x00000000c01135a0                handlers
+                0x00000000c01139a0                Interrupts_addISR
+ COMMON         0x00000000c01139a4       0x1c ./build/PhysMem_Hybrid.o
+                0x00000000c01139a4                mem_info_h
+                0x00000000c01139b8                phys_stack
+                0x00000000c01139bc                phys_bitmap
+ COMMON         0x00000000c01139c0        0x3 ./build/RTC.o
+                0x00000000c01139c0                currentTime
+ *fill*         0x00000000c01139c3        0x1 
+ COMMON         0x00000000c01139c4       0x18 ./build/PhysMem_Bitmap.o
+                0x00000000c01139c4                phys_map
+                0x00000000c01139c8                mem_info
+ *fill*         0x00000000c01139dc        0x4 
+ COMMON         0x00000000c01139e0      0x820 ./build/IDT.o
+                0x00000000c01139e0                idt_p
+                0x00000000c0113a00                idt
+ COMMON         0x00000000c0114200        0x4 ./build/HeapMem_SBRK.o
+                0x00000000c0114200                errno
+                0x00000000c0114204                k_mem_end = .
+LOAD ./build/loader.o
+LOAD ./build/aCommon.o
+LOAD ./build/aUser.o
+LOAD ./build/aGDT.o
+LOAD ./build/aVirtMem_Paging.o
+LOAD ./build/aIDT.o
+LOAD ./build/TarParser.o
+LOAD ./build/RamDisk.o
+LOAD ./build/LinkedList.o
+LOAD ./build/Process.o
+LOAD ./build/Scheduler_RR.o
+LOAD ./build/Syscall.o
+LOAD ./build/User.o
+LOAD ./build/PhysMem_Hybrid.o
+LOAD ./build/GDT.o
+LOAD ./build/VGA.o
+LOAD ./build/Keyboard.o
+LOAD ./build/RTC.o
+LOAD ./build/VFS.o
+LOAD ./build/PhysMem_Bitmap.o
+LOAD ./build/VirtMem_Paging.o
+LOAD ./build/Faults.o
+LOAD ./build/IDT.o
+LOAD ./build/HeapMem_SBRK.o
+LOAD ./build/malloc.o
+LOAD ./build/Kernel.o
+LOAD ./build/Stack.o
+LOAD ./build/Bitmap.o
+LOAD ./build/Common.o
+LOAD ./build/Debug.o
+LOAD ./build/PIT.o
+LOAD ./build/PS2.o
+LOAD ./build/PIC.o
+LOAD ./build/Serial.o
+OUTPUT(./bin/FantomOS.bin elf32-i386)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 ./build/TarParser.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 ./build/RamDisk.o
+ .comment       0x0000000000000011       0x12 ./build/LinkedList.o
+ .comment       0x0000000000000011       0x12 ./build/Process.o
+ .comment       0x0000000000000011       0x12 ./build/Scheduler_RR.o
+ .comment       0x0000000000000011       0x12 ./build/Syscall.o
+ .comment       0x0000000000000011       0x12 ./build/User.o
+ .comment       0x0000000000000011       0x12 ./build/PhysMem_Hybrid.o
+ .comment       0x0000000000000011       0x12 ./build/GDT.o
+ .comment       0x0000000000000011       0x12 ./build/VGA.o
+ .comment       0x0000000000000011       0x12 ./build/Keyboard.o
+ .comment       0x0000000000000011       0x12 ./build/RTC.o
+ .comment       0x0000000000000011       0x12 ./build/VFS.o
+ .comment       0x0000000000000011       0x12 ./build/PhysMem_Bitmap.o
+ .comment       0x0000000000000011       0x12 ./build/VirtMem_Paging.o
+ .comment       0x0000000000000011       0x12 ./build/Faults.o
+ .comment       0x0000000000000011       0x12 ./build/IDT.o
+ .comment       0x0000000000000011       0x12 ./build/HeapMem_SBRK.o
+ .comment       0x0000000000000011       0x12 ./build/malloc.o
+ .comment       0x0000000000000011       0x12 ./build/Kernel.o
+ .comment       0x0000000000000011       0x12 ./build/Stack.o
+ .comment       0x0000000000000011       0x12 ./build/Bitmap.o
+ .comment       0x0000000000000011       0x12 ./build/Common.o
+ .comment       0x0000000000000011       0x12 ./build/Debug.o
+ .comment       0x0000000000000011       0x12 ./build/PIT.o
+ .comment       0x0000000000000011       0x12 ./build/PS2.o
+ .comment       0x0000000000000011       0x12 ./build/PIC.o
+ .comment       0x0000000000000011       0x12 ./build/Serial.o

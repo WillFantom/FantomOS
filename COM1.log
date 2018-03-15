@@ -1,0 +1,18 @@
+
+------ Physical Memory Info ------
+Physical Kernel End (hex)-> 121000
+Total Physical Memory -> 4294MB
+Total Physical Blocks -> 1048560
+MB Free Blocks -> 1047516
+----------------------------------
+
+RamDisk C/ : Tar Archive : 3 Files Found
+Switching to user space
+Initial user app -> shell
+added process! 1
+added process! 0
+New DIR loc -> 188000
+UCODE POINT (Regs) -> 10000000
+UCODE POINT -> 10000000
+Time 14:50:34 
+added process! 2
