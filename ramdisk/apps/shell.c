@@ -1,11 +1,15 @@
 #include <syscall.h>
 #include <file.h>
 #include <stdio.h>
+#include <string.h>
 
 void runCommand(char *input);
+void ls();
+void viewFile(char *filename);
 
 void main()
 {
+    makeForegroundProcess();
 	char inputBuffer[128];
 	cls();
 	putStr("\n----- UserSpace App Shell -----\n");
@@ -14,30 +18,71 @@ void main()
 	while(1)
 	{
 		putChar('\n');
-
-        //Run UserSpace App
-        FILE *program = NULL;
-        while(program == NULL) {
-            program = open(gets(inputBuffer), 'r');
-            if(program == NULL)
-                putStr("No Such Program");
-        }
-        createChildProcess(program);
-
-        viewFile(gets(inputBuffer));
+        putStr("> ");
+        char *input = gets(inputBuffer);
+        runCommand(input);
 	}
-
-    while(1);
 }
 
 void runCommand(char *input)
 {
-	//Handle Empty Input
-	if(input == '\0')
-		return;
 
-	//Get Command
-	//char *command = ;
+    char *cmd = strtok(input, " ");
+    char *p1 = strtok(NULL, " ");
+
+	//Handle Empty Input
+    if(cmd == NULL)
+        return;
+
+    if(strcmp(cmd, "ls") == 0)
+    {
+        ls();
+    }
+    else if(strcmp(cmd, "exec") == 0)
+    {
+        FILE *program = open(p1, 'r');
+        if(program == NULL)
+        {
+            putStr("No Such Program Exists\n");
+        }
+        else
+        {
+            createChildProcess(program);
+        }
+    }
+    else if(strcmp(cmd, "view") == 0)
+    {
+        viewFile(p1);
+    }
+    else if(strcmp(cmd, "help") == 0)
+    {
+        putStr("    ls -> list all files\n");
+        putStr("    exec 'program file' -> run a program\n");
+        putStr("    view 'program file' -> view a plaintext file\n");
+        putStr("    killme -> kills current app (shell)\n");
+    }
+    else if(strcmp(cmd, "killme") == 0)
+    {
+        suicide();
+    }
+
+}
+
+void ls()
+{
+    int index = 1;
+    while(1)
+    {
+        char *filename = getFileAtIndex(index++);
+        if(filename != NULL)
+        {
+            if(index > 2)
+                putStr(", ");
+            putStr(filename);
+        }
+        else
+            break;
+    }
 }
 
 void viewFile(char *filename)

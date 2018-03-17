@@ -20,18 +20,22 @@ ISO_NAME = $(OS_NAME).iso
 
 ## Build Flags
 ASM_FLAGS = -f elf32
-C_FLAGS = -fno-stack-protector -w -std=c99 -fno-builtin -m32 -I include/
+C_FLAGS = -fno-stack-protector -w -std=c99 -fno-builtin -m32 -I packages/
 
 ##  Link Flags
 LINK_FLAGS = -m elf_i386 -Map $(IMG_DIR)/memory.map
 
 ##  Core Files
-C_CORE_SRC = $(wildcard src/core/**/*.c)
-ASM_CORE_SRC = $(wildcard src/core/**/*.s)
+MANAGER = $(packages/Manager.c)
+MANAGER_OBJ = $(Manager.o)
+C_CORE_SRC = $(wildcard packages/core/**/*.c)
+C_CORE_HDR = $(wildcard packages/core/**/*.h)
+ASM_CORE_SRC = $(wildcard packages/core/**/*.s)
 
 ##  Module Files
-C_MODULES_SRC = $(wildcard src/modules/**/*.c)
-ASM_MODULES_SRC = $(wildcard src/modules/**/*.s)
+C_MODULES_SRC = $(wildcard packages/modules/**/*.c)
+C_MODULES_HDR = $(wildcard packages/modules/**/*.h)
+ASM_MODULES_SRC = $(wildcard packages/modules/**/*.s)
 
 ##  Core Objects
 C_CORE_OBJ = $(C_CORE_SRC:.c=.o)
@@ -65,13 +69,7 @@ buidlDisk:
 	cd ..
 
 ##  Compile & Link
-compile: $(ASM_CORE_OBJ) $(C_CORE_OBJ) 
-	@echo "Core Compiled"
-
-compileMods: $(C_MODULES_OBJ) 
-	@echo "Mods Compiled"
-
-link: $(ASM_CORE_OBJ) $(ASM_MODULES_OBJ) $(C_MODULES_OBJ) $(C_CORE_OBJ) 
+link: $(ASM_CORE_OBJ) $(C_CORE_OBJ) $(ASM_MODULES_OBJ) $(C_MODULES_OBJ) 
 	@echo "Linking"
 	@ld -T linker.ld $(LINK_FLAGS) $(foreach file,$(^F),$(BUILD_DIR)/$(file)) -o $(IMG_DIR)/$(IMG_NAME)
 

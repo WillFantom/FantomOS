@@ -1,32 +1,56 @@
 #include <string.h>
 #include <syscall.h>
 
-char *strtok(char *str, const char c)
+
+char* strtok(char * str, char *comp)
 {
+    static int pos;
+    static char *s;
+    int i =0, start = pos;
 
-	static char* _buffer;
-	if(str != NULL) _buffer = str;
-    if(_buffer[0] == '\0') return NULL;
- 
-    char *ret = _buffer, *b;
-    const char *d;
- 
-    for(b = _buffer; *b !='\0'; b++) {
-        for(d = delim; *d != '\0'; d++) {
-            if(*b == *d) {
-                *b = '\0';
-                _buffer = b+1;
- 
-                // skip the beginning delimiters
-                if(b == ret) { 
-                    ret++; 
-                    continue; 
+    if(str!=NULL)
+        s = str;
+
+    i = 0;
+    int j = 0;
+    while(s[pos] != '\0')
+    {
+        j = 0;
+        while(comp[j] != '\0')
+        {
+            if(s[pos] == comp[j])
+            {
+                s[pos] = '\0';
+                pos = pos+1;
+                if(s[start] != '\0')
+                    return (&s[start]);
+                else
+                {
+                    start = pos;
+                    pos--;
+                    break;
                 }
-                return ret;
             }
+            j++;
         }
+        pos++;
     }
- 
-    return ret;
+    s[pos] = '\0';
 
+    pos = 0;
+
+    if(s[start] == '\0')
+        return NULL;
+    else
+        return &s[start];
+}
+
+int strcmp(const char* s1, const char* s2)
+{
+    while(*s1 && (*s1 == *s2))
+    {
+        s1++;
+        s2++;
+    }
+    return *(const unsigned char*)s1 - *(const unsigned char*)s2;
 }
