@@ -42,7 +42,7 @@ keybuffer_t *Keyboard_getNewBuffer()
     keybuffer_t *kbBufferN = calloc(1, sizeof(keybuffer_t));
 
     kbBufferN->s = calloc(1, (KEYBUFFER_MAX * sizeof(char)));
-    kbBufferN->e = kbBufferN->s;
+    kbBufferN->e = kbBufferN->s + KEYBUFFER_MAX;
     kbBufferN->r = kbBufferN->s;
     kbBufferN->w = kbBufferN->s;
 
