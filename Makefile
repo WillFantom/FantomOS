@@ -26,15 +26,11 @@ C_FLAGS = -fno-stack-protector -w -std=c99 -fno-builtin -m32 -I packages/
 LINK_FLAGS = -m elf_i386 -Map $(IMG_DIR)/memory.map
 
 ##  Core Files
-MANAGER = $(packages/Manager.c)
-MANAGER_OBJ = $(Manager.o)
 C_CORE_SRC = $(wildcard packages/core/**/*.c)
-C_CORE_HDR = $(wildcard packages/core/**/*.h)
 ASM_CORE_SRC = $(wildcard packages/core/**/*.s)
 
 ##  Module Files
 C_MODULES_SRC = $(wildcard packages/modules/**/*.c)
-C_MODULES_HDR = $(wildcard packages/modules/**/*.h)
 ASM_MODULES_SRC = $(wildcard packages/modules/**/*.s)
 
 ##  Core Objects
