@@ -38,7 +38,6 @@ void Kernel_halt()
 {
     while(1)
         halt_cpu();
-    while(1);
 }
 
 bool Kernel_initModule(char *name, bool (*function)())
@@ -50,7 +49,6 @@ bool Kernel_initModule(char *name, bool (*function)())
 
 void Kernel_panic(char *message)
 {
-
     if(message != NULL)
         kprintf("Message -> %s\n", message);
 
@@ -71,47 +69,6 @@ void Kernel_getMBMods(multiboot_info_t *mb_info)
     //mb_mods = &mods;
     for(uint32_t mod = 0 ; mod < mb_info->mods_count ; mod++)
         mb_mods[mod] = (uint32_t)((multiboot_module_t *)(mb_info->mods_addr + KBASE_VADDRESS))[mod].mod_start;
-}
-
-void Kernel_addKenrelMods()
-{
-    /*modCount = 0;
-    KMod_init[modCount++] = &Serial_init;
-    KMod_init[modCount++] = &VGA_init;
-
-    KMod_init[modCount++] = &GDT_init;
-    KMod_init[modCount++] = &IDT_init;
-
-    KMod_init[modCount++] = &PIC_init;
-    KMod_init[modCount++] = &PIT_init;
-    KMod_init[modCount++] = &PS2_init;
-
-    //KMod_init[modCount++] = &PhysMem_Bitmap_init;
-    KMod_init[modCount++] = &PhysMem_Hybrid_init;
-    KMod_init[modCount++] = &VirtMem_Paging_init;
-    KMod_init[modCount++] = &HeapMem_SBRK_init;
-
-    KMod_init[modCount++] = &VFS_init;
-    KMod_init[modCount++] = &RamDisk_init;
-
-    KMod_init[modCount++] = &Keyboard_init;
-
-    KMod_init[modCount++] = &Scheduler_RR_init;
-    KMod_init[modCount++] = &Process_init;
-
-    KMod_init[modCount++] = &User_switchTo;*/
-}
-
-bool Kernel_initMods()
-{
-    /*interrupts_dis();
-    for(uint8_t m = 0 ; m < modCount ; m++)
-    {
-        if(!KMod_init[m]())
-            return false;
-    }
-    interrupts_enb();
-    return true;*/
 }
 
 void printSystemInfo()
