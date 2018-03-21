@@ -30,12 +30,12 @@ void PIT_handler(Registers *regs)
     if(Scheduler_running)
         tick++;
 
-    if(tick % 2 == 0 && Scheduler_running)
+    if(tick % 3 == 0 && Scheduler_running)
     {
         //kprintf("Context Switch %d\n", tick/3);
         Process_contextSwitch(regs);
     }
-    else if(tick % 2 != 0 && Scheduler_running)
+    else if(tick % 3 != 0 && Scheduler_running)
     {
         __asm__ volatile("mov %0, %%DR0" : : "a" (0));
     }
